@@ -151,6 +151,15 @@ object RenderingPlatformParam {
   def apply(value: String): RenderingPlatformParam = RenderingPlatformParam(SingleValue(value))
 }
 
+case class SectionParam(value: SingleValue) extends AdTargetParam {
+  override val name = SectionParam.name
+}
+
+object SectionParam {
+  val name = "s"
+  def from(item: Content): Option[SectionParam] =
+    item.section.flatMap(section => SingleValue.fromRaw(section.id).map(SectionParam(_)))
+}
 case class SeriesParam(value: MultipleValues) extends AdTargetParam {
   override val name = SeriesParam.name
 }
